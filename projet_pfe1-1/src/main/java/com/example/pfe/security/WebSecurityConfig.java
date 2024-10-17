@@ -77,15 +77,20 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 
         return http.build();
     }
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:4200");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
+  @Bean
+public CorsFilter corsFilter() {
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowCredentials(true);
+    
+    // Ajouter plusieurs origines autorisées
+    config.addAllowedOrigin("http://localhost:4200");
+    config.addAllowedOrigin("http://localhost:8888");
+
+    config.addAllowedHeader("*"); // Autoriser tous les en-têtes
+    config.addAllowedMethod("*"); // Autoriser toutes les méthodes HTTP (GET, POST, PUT, DELETE, etc.)
+    
+    source.registerCorsConfiguration("/**", config); // Appliquer la configuration pour toutes les routes
+    return new CorsFilter(source);
+}
 }
